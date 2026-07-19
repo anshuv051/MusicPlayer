@@ -64,6 +64,3 @@ The UI follows a **cartoon brutalist** aesthetic:
 - Flat solid colours
 - Expressive, chunky typography
 - Zero gradients on UI elements (except the vinyl record and disco beams)
-
-## To run 
-open /Users/anshuverma/Documents/CodeAlpha/Music\ Player/index.html
