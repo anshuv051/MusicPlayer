@@ -18,6 +18,7 @@
         </div>
     </div>
 
+    <!-- Disco lighting overlay -->
     <div id="discoOverlay" class="disco-overlay">
         <div class="disco-beam beam1"></div>
         <div class="disco-beam beam2"></div>
@@ -36,19 +37,25 @@
                 </div>
             </div>
         </div>
+
         <div class="song-info">
             <div class="now-playing" id="nowPlaying">No track selected</div>
             <div class="progress-container">
                 <input type="range" id="seekSlider" class="seek-slider" min="0" max="100" value="0">
-                <div class="time-row"><span id="currentTime">0:00</span><span id="duration">0:00</span></div>
+                <div class="time-row">
+                    <span id="currentTime">0:00</span>
+                    <span id="duration">0:00</span>
+                </div>
             </div>
         </div>
+
         <div class="controls-row">
             <button id="prevBtn" class="btn control-btn" title="Previous (P)">⏮</button>
             <button id="playPauseBtn" class="btn control-btn play-btn">▶</button>
             <button id="stopBtn" class="btn control-btn" title="Stop">⏹</button>
             <button id="nextBtn" class="btn control-btn" title="Next (N)">⏭</button>
         </div>
+
         <div class="volume-row">
             <span id="muteBtn" class="volume-icon">🔊</span>
             <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="80">
@@ -58,8 +65,8 @@
     <div class="source-row">
         <button id="playSong1" class="btn preset-btn">🎵 Song 1</button>
         <button id="playSong2" class="btn preset-btn">🎵 Song 2</button>
-        <label for="fileInput" id="uploadBtn" class="btn preset-btn upload-btn">📁 Upload Tracks</label>
-        <input type="file" id="fileInput" accept="audio/*,.mp3,.wav,.ogg,.m4a,.aac,.flac" multiple>
+        <button type="button" id="uploadBtn" class="btn preset-btn upload-btn">📁 Upload Tracks</button>
+        <input type="file" id="fileInput" accept="audio/*" multiple>
     </div>
 
     <div class="playlist-container">
