@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const muteBtn = document.getElementById('muteBtn');
     const darkModeToggle = document.getElementById('darkModeToggle');
     const fileInput = document.getElementById('fileInput');
+    const uploadBtn = document.getElementById('uploadBtn');
     const playlistEl = document.getElementById('playlist');
     const playlistCount = document.getElementById('playlistCount');
     const clearPlaylistBtn = document.getElementById('clearPlaylist');
@@ -97,7 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!track.url) return;
         audio.src = track.url;
         audio.load();
-        audio.play().catch(() => { });
+        audio.play().catch(() => {
+            nowPlaying.textContent = `${track.name} (press play to start)`;
+        });
         updateUIForPlay(track.name);
         renderPlaylist();
         updateDisco();
@@ -181,13 +184,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ===== FILE INPUT =====
+    // Use a real button and trigger the hidden input explicitly. This is more
+    // reliable than depending on label activation across browsers/webviews.
+    uploadBtn.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', () => {
-        const files = Array.from(fileInput.files);
-        if (files.length === 0) return;
-        const startIdx = playlist.length;
-        files.forEach(file => addToPlaylist(file.name, URL.createObjectURL(file)));
-        playTrackAtIndex(startIdx);
+        const files = Array.from(fileInput.files || []);
         fileInput.value = '';
+        if (files.length === 0) return;
+
+        const audioFiles = files.filter(file => !file.type || file.type.startsWith('audio/'));
+        if (audioFiles.length === 0) {
+            nowPlaying.textContent = 'Please select an audio file';
+            return;
+        }
+
+        const startIdx = playlist.length;
+        audioFiles.forEach(file => addToPlaylist(file.name, URL.createObjectURL(file)));
+        playTrackAtIndex(startIdx);
     });
 
     // ===== CLEAR =====
@@ -225,6 +238,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== AUDIO EVENTS =====
     audio.addEventListener('timeupdate', updateSeekDisplay);
     audio.addEventListener('loadedmetadata', () => { durationEl.textContent = formatTime(audio.duration); });
+    audio.addEventListener('error', () => {
+        if (currentTrackIndex >= 0 && playlist[currentTrackIndex]) {
+            nowPlaying.textContent = `Unable to play ${playlist[currentTrackIndex].name}`;
+            updateUIForPause();
+        }
+    });
 
     // Keep UI in sync with native play events (browser autoplay, context menu, etc.)
     audio.addEventListener('play', () => {
