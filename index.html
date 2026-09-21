@@ -4,22 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#ffcf33">
     <title>Vinyl Wave — Music Player</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 
 <body>
-    <header class="header">
+    <div class="header">
         <div class="title">🎵 Vinyl Wave</div>
         <div class="header-actions">
-            <button id="discoToggle" class="btn icon-btn" type="button" title="Disco Mode (D)" aria-label="Toggle disco mode" aria-pressed="false">🪩</button>
-            <button id="darkModeToggle" class="btn icon-btn" type="button" aria-label="Toggle light mode">🌙</button>
+            <button id="discoToggle" class="btn icon-btn" title="Disco Mode (D)">🪩</button>
+            <button id="darkModeToggle" class="btn icon-btn">🌙</button>
         </div>
-    </header>
+    </div>
 
-    <div id="discoOverlay" class="disco-overlay" aria-hidden="true">
+    <!-- Disco lighting overlay -->
+    <div id="discoOverlay" class="disco-overlay">
         <div class="disco-beam beam1"></div>
         <div class="disco-beam beam2"></div>
         <div class="disco-beam beam3"></div>
@@ -27,59 +27,56 @@
         <div class="disco-beam beam5"></div>
     </div>
 
-    <main class="app-shell">
-        <section class="player" id="player" aria-label="Music player">
-            <div class="vinyl-container">
-                <div class="vinyl" id="vinyl" aria-hidden="true">
-                    <div class="vinyl-grooves"></div>
-                    <div class="vinyl-label">
-                        <span class="label-icon">♪</span>
-                        <span class="song-name" id="vinylSongName">No Track</span>
-                    </div>
+    <div class="player" id="player">
+        <div class="vinyl-container">
+            <div class="vinyl" id="vinyl">
+                <div class="vinyl-grooves"></div>
+                <div class="vinyl-label">
+                    <span class="label-icon">♪</span>
+                    <span class="song-name" id="vinylSongName">No Track</span>
                 </div>
             </div>
+        </div>
 
-            <div class="song-info">
-                <div class="now-playing" id="nowPlaying" aria-live="polite">No track selected</div>
-                <div class="progress-container">
-                    <input type="range" id="seekSlider" class="seek-slider" min="0" max="100" value="0" aria-label="Seek through track">
-                    <div class="time-row">
-                        <span id="currentTime">0:00</span>
-                        <span id="duration">0:00</span>
-                    </div>
+        <div class="song-info">
+            <div class="now-playing" id="nowPlaying">No track selected</div>
+            <div class="progress-container">
+                <input type="range" id="seekSlider" class="seek-slider" min="0" max="100" value="0">
+                <div class="time-row">
+                    <span id="currentTime">0:00</span>
+                    <span id="duration">0:00</span>
                 </div>
             </div>
+        </div>
 
-            <div class="controls-row">
-                <button id="prevBtn" class="btn control-btn" type="button" title="Previous (P)" aria-label="Previous track">⏮</button>
-                <button id="playPauseBtn" class="btn control-btn play-btn" type="button" aria-label="Play">▶</button>
-                <button id="stopBtn" class="btn control-btn" type="button" title="Stop" aria-label="Stop">⏹</button>
-                <button id="nextBtn" class="btn control-btn" type="button" title="Next (N)" aria-label="Next track">⏭</button>
-            </div>
+        <div class="controls-row">
+            <button id="prevBtn" class="btn control-btn" title="Previous (P)">⏮</button>
+            <button id="playPauseBtn" class="btn control-btn play-btn">▶</button>
+            <button id="stopBtn" class="btn control-btn" title="Stop">⏹</button>
+            <button id="nextBtn" class="btn control-btn" title="Next (N)">⏭</button>
+        </div>
 
-            <div class="volume-row">
-                <button id="muteBtn" class="volume-icon" type="button" aria-label="Mute">🔊</button>
-                <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="80" aria-label="Volume">
-            </div>
-        </section>
+        <div class="volume-row">
+            <span id="muteBtn" class="volume-icon">🔊</span>
+            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="80">
+        </div>
+    </div>
 
-        <section class="source-row" id="dropZone" aria-label="Add tracks">
-            <button id="playSong1" class="btn preset-btn" type="button">🎵 Song 1</button>
-            <button id="playSong2" class="btn preset-btn" type="button">🎵 Song 2</button>
-            <button type="button" id="uploadBtn" class="btn preset-btn upload-btn">📁 Upload Tracks</button>
-            <input type="file" id="fileInput" accept="audio/*" multiple>
-            <span class="drop-hint">or drop audio files here</span>
-        </section>
+    <div class="source-row">
+        <button id="playSong1" class="btn preset-btn">🎵 Song 1</button>
+        <button id="playSong2" class="btn preset-btn">🎵 Song 2</button>
+        <label for="fileInput" class="btn preset-btn upload-btn">📁 Upload Tracks</label>
+        <input type="file" id="fileInput" accept="audio/*" multiple>
+    </div>
 
-        <section class="playlist-container" aria-labelledby="playlistTitle">
-            <div class="playlist-header">
-                <h3 id="playlistTitle">📋 Playlist</h3>
-                <span class="playlist-count" id="playlistCount">0 tracks</span>
-                <button id="clearPlaylist" class="btn small-btn" type="button">Clear All</button>
-            </div>
-            <ul id="playlist" class="playlist" aria-live="polite"></ul>
-        </section>
-    </main>
+    <div class="playlist-container">
+        <div class="playlist-header">
+            <h3>📋 Playlist</h3>
+            <span class="playlist-count" id="playlistCount">0 tracks</span>
+            <button id="clearPlaylist" class="btn small-btn">Clear All</button>
+        </div>
+        <ul id="playlist" class="playlist"></ul>
+    </div>
 
     <audio id="audio" preload="metadata"></audio>
     <script src="script.js"></script>
